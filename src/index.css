@@ -1,0 +1,255 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================================
+   SAHLOUL IT DESK — TOKENS
+   ----------------------------------------------------------------------------
+   The palette is derived from the hospital logo. After uploading the real logo
+   you only need to adjust the six brand tokens below (brand / brand-ink /
+   accent + the paper & ink neutrals); every component reads from here.
+
+   Values are HSL triplets consumed as `hsl(var(--token))`.
+   ========================================================================== */
+:root {
+  /* Paper & ink — a warm off-white, never pure white / pure black */
+  --background: 39 43% 93%; /* #F4EEE2 warm paper            */
+  --foreground: 220 10% 11%; /* #181A1D deep ink              */
+  --surface: 40 48% 97%; /* #FCF9F3 raised paper          */
+  --muted: 39 27% 88%; /* #EDE6D8                       */
+  --muted-foreground: 220 8% 37%; /* #575C63                       */
+
+  /* Brand — clinical deep teal, from the logo                                    */
+  --primary: 174 70% 21%; /* #0F5A53                       */
+  --primary-foreground: 40 50% 97%;
+
+  /* Accent — a single sharp red (Tunisian crescent red, from the logo)           */
+  --accent: 352 71% 46%; /* #C81E37                       */
+  --accent-foreground: 40 60% 97%;
+
+  --success: 152 52% 30%; /* #25724B deep green            */
+  --success-foreground: 40 50% 97%;
+  --warning: 33 88% 42%; /* #C7790D amber                 */
+  --warning-foreground: 40 50% 97%;
+  --destructive: 352 71% 46%;
+  --destructive-foreground: 40 60% 97%;
+
+  /* Hairlines & focus                                                            */
+  --border: 37 24% 79%; /* #D9CDB7                       */
+  --input: 37 24% 74%;
+  --ring: 174 70% 21%;
+
+  --radius: 3px;
+  --cut: 18px;
+
+  color-scheme: light;
+}
+
+.dark {
+  /* Warm ink background — deep, never pure black                                 */
+  --background: 30 9% 8%; /* #17140F                      */
+  --foreground: 40 30% 91%; /* #EFE9DC                      */
+  --surface: 30 8% 11%; /* #1F1C17                      */
+  --muted: 30 7% 16%; /* #2C2823                      */
+  --muted-foreground: 40 12% 64%; /* #AEA692                      */
+
+  --primary: 172 40% 56%; /* #63C3B7 lifted teal          */
+  --primary-foreground: 30 20% 8%;
+
+  --accent: 353 78% 63%; /* #EE5A6B                      */
+  --accent-foreground: 30 20% 8%;
+
+  --success: 152 40% 52%;
+  --success-foreground: 30 20% 8%;
+  --warning: 33 78% 58%;
+  --warning-foreground: 30 20% 8%;
+  --destructive: 353 78% 63%;
+  --destructive-foreground: 30 20% 8%;
+
+  --border: 30 8% 22%; /* #3B3630                      */
+  --input: 30 8% 26%;
+  --ring: 172 40% 56%;
+
+  color-scheme: dark;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "kern" 1, "liga" 1;
+    text-rendering: optimizeLegibility;
+    min-height: 100dvh;
+  }
+
+  /* Arabic & Chinese get their own matching type family */
+  html[lang="ar"] body {
+    @apply font-arabic;
+    letter-spacing: 0;
+  }
+  html[lang="zh"] body {
+    font-family: "Noto Sans SC", "IBM Plex Sans", system-ui, sans-serif;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display;
+    font-variation-settings: "opsz" 96;
+  }
+
+  /* Visible, branded focus ring for keyboard users */
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.9);
+    color: hsl(var(--primary-foreground));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* --- Paper grain: a whisper of texture, applied by <GrainOverlay /> -------- */
+  .paper-grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.038;
+    mix-blend-mode: multiply;
+  }
+  .dark .paper-grain {
+    opacity: 0.05;
+    mix-blend-mode: screen;
+  }
+
+  /* --- Oversized, letter-spaced tiny label (journal caption style) ---------- */
+  .label-caps {
+    @apply text-[0.6875rem] font-medium uppercase tracking-label text-muted-foreground;
+  }
+
+  /* --- A single hairline rule ---------------------------------------------- */
+  .hairline {
+    @apply border-0 border-t border-border;
+  }
+
+  /* --- Panel: raised paper with a hairline edge ---------------------------- */
+  .paper-panel {
+    @apply border border-border bg-surface shadow-paper;
+    border-radius: var(--radius);
+  }
+
+  /* --- Cut top-right corner, with a hairline following the diagonal -------- */
+  .cut-tr {
+    position: relative;
+    clip-path: polygon(
+      0 0,
+      calc(100% - var(--cut)) 0,
+      100% var(--cut),
+      100% 100%,
+      0 100%
+    );
+  }
+  .cut-tr::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: calc(100% - var(--cut));
+    width: calc(var(--cut) * 1.4142);
+    height: 1px;
+    background: hsl(var(--border));
+    transform-origin: left top;
+    transform: rotate(45deg);
+    pointer-events: none;
+  }
+
+  /* --- Perforated edge for ticket-like cards -------------------------------- */
+  .perforation {
+    background-image: linear-gradient(
+      to bottom,
+      hsl(var(--border)) 0 6px,
+      transparent 6px 12px
+    );
+    background-size: 1px 12px;
+    background-repeat: repeat-y;
+    background-position: center top;
+  }
+
+  /* --- Rubber-stamp status badge ------------------------------------------- */
+  .stamp {
+    @apply inline-flex items-center gap-1.5 border px-2.5 py-1 font-mono text-[0.6875rem] font-medium uppercase tracking-wider;
+    border-radius: 2px;
+    transform: rotate(-1.5deg);
+  }
+
+  /* --- Editorial link with an animated underline --------------------------- */
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .link-underline:hover,
+  .link-underline:focus-visible {
+    background-size: 100% 1px;
+  }
+
+  /* --- Thin ruled background for "journal" sections ------------------------ */
+  .ruled-paper {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0 35px,
+      hsl(var(--border) / 0.5) 35px 36px
+    );
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* --- Custom scrollbar ---------------------------------------------------- */
+  .thin-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--border)) transparent;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  /* Logical-direction helpers that work in both LTR and RTL */
+  .flip-x {
+    transform: scaleX(1);
+  }
+  [dir="rtl"] .flip-x {
+    transform: scaleX(-1);
+  }
+}

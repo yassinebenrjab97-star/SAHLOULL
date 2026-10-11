@@ -1,0 +1,8 @@
+# Supabase CLI configuration.
+# The AI assistant is a public endpoint (called by anonymous visitors), so the
+# platform JWT check is disabled for it. It cannot touch the database — it only
+# proxies an LLM — and enforces its scope through the system prompt.
+project_id = "sahloul-it-desk"
+
+[functions.ai-assistant]
+verify_jwt = false

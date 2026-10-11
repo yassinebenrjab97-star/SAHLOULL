@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Hôpital Universitaire Sahloul">
+  <title>Hôpital Universitaire Sahloul</title>
+  <!--
+    PLACEHOLDER LOGO
+    Replace this file with the official hospital logo (keep the name `logo.svg`,
+    or drop in `logo.png` and update the references in index.html + <Logo/>).
+    The palette below mirrors the brand tokens in src/index.css.
+  -->
+  <path d="M32 3.5 8.5 12v17.2c0 13.9 9.6 26.6 23.5 31.3 13.9-4.7 23.5-17.4 23.5-31.3V12L32 3.5Z"
+        fill="#0F5A53"/>
+  <path d="M32 3.5 8.5 12v17.2c0 .9 0 1.7.1 2.6L32 24V3.5Z" fill="#0C4A44"/>
+  <path d="M28.6 16.8h6.8v9.4h9.4v6.8h-9.4v9.4h-6.8v-9.4h-9.4v-6.8h9.4v-9.4Z"
+        fill="#F4EEE2"/>
+  <path d="M14 47.5c4.6 4.9 11.1 8.5 18 10.5 6.9-2 13.4-5.6 18-10.5"
+        fill="none" stroke="#C81E37" stroke-width="2.4" stroke-linecap="round"/>
+</svg>
